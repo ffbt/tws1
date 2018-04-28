@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta content="text/html;charset=utf-8"/>
+
+    <script th:src = "@{js/jquery/2.0.0/jquery.min.js}"  type="text/javascript"></script>
+    <link th:href = "@{css/bootstrap/3.3.6/bootstrap.min.css}" rel = "stylesheet" />
+    <script th:src = "@{js/bootstrap/3.3.6/bootstrap.min.js}"  type="text/javascript"></script>
+
+    <title>login</title>
+</head>
+<body>
+<div style = "max-width: 400px;margin: 100px auto;">
+    <ul class = "nav nav-tabs">
+        <li class = "active"><a href = "#login" data-toggle = "tab">登录</a></li>
+        <li class = ""><a href = "#register" data-toggle = "tab">注册</a></li>
+    </ul>
+    <div class = "tab-content">
+        <div class = "tab-pane fade in active" id = "login">
+            <form method = "post" th:action = "@{/login}" action = "/login">
+                <br>
+                <input class = "form-control" placeholder = "请输入员工号" name = "id"><br>
+                <input type = "password" class = "form-control" placeholder = "请输入密码" name = "password"><br>
+                <button type = "submit" class = "btn btn-lg btn-success btn-block">登录</button>
+            </form>
+        </div>
+        <div class = "tab-pane fade" id = "register">
+            <form id = "register_form" method = "post">
+                <br>
+                <input class = "form-control" placeholder = "(必填) 请输入员工号(8位)" name = "id" id = "id"><br>
+                <input class = "form-control" placeholder = "           请输入用户名" name = "userName"><br>
+                <input type = "password" class = "form-control" placeholder = "(必填) 请输入登录密码" name = "password"
+                       id = "password"><br>
+                <input type = "password" class = "form-control" placeholder = "(必填) 再次输入登录密码" name = "repassword"
+                       id = "repassword" onkeyup = "checkPassword()">
+                <span id = "checkResult"></span><br>
+                <input class = "form-control" placeholder = "           请输入电子信箱" name = "email"><br>
+                <input class = "form-control" placeholder = "           请输入联系电话" name = "phoneNumber"><br>
+                <input class = "form-control" placeholder = "           请输入安全问题" name = "question"><br>
+                <input class = "form-control" placeholder = "           请输入答案" name = "answer"><br>
+                <button type = "submit" class = "btn btn-lg btn-success btn-block">注册</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var flag = false;
+
+    function submit1() {
+        var id = document.getElementById("id").value;
+        var password = document.getElementById("password").value;
+        var repassword = document.getElementById("repassword").value;
+        if (!flag || id.length == 0 || password.length == 0 || repassword.length) {
+//            alert("您还有未完成的操作");
+            return true;
+        }
+        return true;
+    }
+
+    function checkPassword() {
+        var password = document.getElementById("password").value;
+        var repassword = document.getElementById("repassword").value;
+        if (password.localeCompare(repassword) == 0) {
+            flag = true;
+            document.getElementById("checkResult").innerHTML = "<font color='green'>匹配成功</font>";
+        }
+        else {
+            flag = false;
+            document.getElementById("checkResult").innerHTML = "<font color='red'>密码不匹配</font>";
+        }
+    }
+
+    $(function () {
+        $("#register_form").submit(function () {
+            var params = $(this).serialize();
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/register",
+                    data: params,
+                    success: function (data) {
+                        var resultJson = $.parseJSON(data);
+                        if (resultJson.state == 0)
+                            alert("注册失败");
+                        else
+                            alert("注册成功");
+                    }
+                }
+            );
+        })
+    })
+</script>
+</body>
+</html>
