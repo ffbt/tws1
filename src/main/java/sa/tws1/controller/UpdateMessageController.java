@@ -7,21 +7,15 @@ import sa.tws1.bean.Employee;
 import sa.tws1.service.EmployeeService;
 
 @RestController
-public class RegisterController
+public class UpdateMessageController
 {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/register")
-    public String register(Employee e)
+    @RequestMapping("/updatemessage")
+    public String updateMessage(Employee employee)
     {
-        if (employeeService.verifyEmployee(e))
-        {
-            return "{\"state\": \"1\"}";
-        }
-        else
-        {
-            return "{\"state\": \"0\"}";
-        }
+        employeeService.updateMessage(employee);
+        return "{\"state\": \"1\"}";
     }
 }

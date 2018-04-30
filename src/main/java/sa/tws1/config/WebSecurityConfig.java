@@ -44,15 +44,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.authorizeRequests()
 //                .antMatchers("/js/**","/css/**").permitAll()
+                .antMatchers("/register","/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                /*.antMatcher("/error").anonymous()
-                .and()*/
                 .formLogin()
                 .usernameParameter("id")
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
-                .failureUrl("/error").permitAll();
+                .failureUrl("/login?error").permitAll()
+                .and()
+                .csrf().disable();
     }
 
     @Override

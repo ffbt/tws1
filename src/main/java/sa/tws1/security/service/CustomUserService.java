@@ -25,9 +25,15 @@ public class CustomUserService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException
     {
-        Employee employee = employeeDAO.findById(id).get(); // 根据id查找
-        if (employee == null)
+        Employee employee;
+        try
+        {
+            employee = employeeDAO.findById(id).get(); // 根据id查找
+        }
+        catch (Exception e)
+        {
             throw new UsernameNotFoundException("id 不存在");
+        }
         List<GrantedAuthority> authorities = new ArrayList<>();
         Set<Role> roleSet = employee.getRoles();
         for (Role role : roleSet)
