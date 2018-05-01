@@ -3,10 +3,6 @@
 <head>
     <meta content = "text/html;charset=utf-8"/>
 
-    <!--https://blog.csdn.net/sinat_28454173/article/details/52251004-->
-    <!--<meta name = "_csrf" th:content = "${_csrf.token}">-->
-    <!--<meta name = "_csrf_header" th:content = "${_csrf.headerName}">-->
-
     <script th:src = "@{js/jquery/2.0.0/jquery.min.js}" type = "text/javascript"></script>
     <link th:href = "@{css/bootstrap/3.3.6/bootstrap.min.css}" rel = "stylesheet"/>
     <script th:src = "@{js/bootstrap/3.3.6/bootstrap.min.js}" type = "text/javascript"></script>
@@ -16,14 +12,14 @@
 <body>
 <div style = "max-width: 400px;margin: 100px auto;">
     <p th:if = "${param.logout}" class = "bg-warning">已成功注销</p>
-    <p th:if = "${param.error}" class = "bg-danger">有错误，请重试</p>
+    <!--<p th:if = "${param.error}" class = "bg-danger">有错误，请重试</p>-->
     <ul class = "nav nav-tabs">
         <li class = "active"><a href = "#login" data-toggle = "tab">登录</a></li>
         <li class = ""><a href = "#register" data-toggle = "tab">注册</a></li>
     </ul>
     <div class = "tab-content">
         <div class = "tab-pane fade in active" id = "login">
-            <form method = "post"  action = "/login">
+            <form method = "post" action = "/login">
                 <br>
                 <input class = "form-control" placeholder = "请输入员工号" name = "id"><br>
                 <input type = "password" class = "form-control" placeholder = "请输入密码" name = "password"><br>
@@ -79,14 +75,6 @@
 
     $(function () {
         $("#register_form").submit(function () {
-            // var token = $("meta[name='_csrf']").attr("content");
-            // var header = $("meta[name='_csrf_header']").attr("content");
-            //
-            // // 没有ajaxSend方法
-            // $(document).ajaxSend(function (e, xhr, options) {
-            //     xhr.setRequestHeader(header, token);
-            // });
-
             var params = $(this).serialize();
             $.ajax(
                 {
@@ -103,7 +91,7 @@
                 }
             );
         })
-    })
+    });
 </script>
 </body>
 </html>

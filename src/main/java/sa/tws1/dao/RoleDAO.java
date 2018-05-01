@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface RoleDAO extends JpaRepository<Role, Integer>
 {
-    List<Role> findByRoleName(String roleName);
 }

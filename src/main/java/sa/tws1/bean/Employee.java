@@ -9,32 +9,18 @@ import java.util.Set;
 public class Employee implements Serializable
 {
     @Id
-    @Column(name = "id")
     private String id;
-
-    @Column(name = "userName")
     private String userName;
-
-    @Column(name = "password")
     private String password;
-
-    @Column(name = "email")
     private String email;
-
-    @Column(name = "phoneNumber")
     private String phoneNumber;
-
-    @Column(name = "question")
     private String question;
-
-    @Column(name = "answer")
     private String answer;
-
-    @Column(name = "company")
-    private String company;
-
-    @Column(name = "department")
     private String department;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cid")
+    private Company company;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -43,6 +29,10 @@ public class Employee implements Serializable
             inverseJoinColumns = @JoinColumn(name = "rid")
     )
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "eid")
+    private Set<Tool> tools;
 
     public String getId()
     {
@@ -114,12 +104,13 @@ public class Employee implements Serializable
         this.answer = answer;
     }
 
-    public String getCompany()
+
+    public Company getCompany()
     {
         return company;
     }
 
-    public void setCompany(String company)
+    public void setCompany(Company company)
     {
         this.company = company;
     }
@@ -142,5 +133,15 @@ public class Employee implements Serializable
     public void setRoles(Set<Role> roles)
     {
         this.roles = roles;
+    }
+
+    public Set<Tool> getTools()
+    {
+        return tools;
+    }
+
+    public void setTools(Set<Tool> tools)
+    {
+        this.tools = tools;
     }
 }
