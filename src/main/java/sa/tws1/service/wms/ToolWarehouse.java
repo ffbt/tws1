@@ -1,40 +1,29 @@
 package sa.tws1.service.wms;
 
+import sa.tws1.bean.AllTool;
+
 import java.util.Random;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class ToolWarehouse
 {
-    private ThreadPoolExecutor robots;
-    private ConveyerBelt conveyerBelt;
+    private RobotSystem robotSystem;
+    private ConveyorSystem conveyorSystem;
 
-    public ToolWarehouse(int robotNum)
+    public ToolWarehouse()
     {
-        this.robots = new ThreadPoolExecutor(robotNum, robotNum, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-        this.conveyerBelt = new ConveyerBelt("conveyerBelt");
+        this.robotSystem = new RobotSystem();
+        this.conveyorSystem = new ConveyorSystem();
     }
 
-    public void getTool()
+    public void getTool(AllTool allTool)
     {
-        robots.execute(new Robot("robot",
-                () ->
-                {
-                    Random random = new Random();
-                    System.out.println("get tool");
-                    System.out.println("moving...");
-                    try
-                    {
-                        Thread.sleep(random.nextInt(100));
-                    }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    System.out.println("put tool");
-                },
-                conveyerBelt
-        ));
+        int toolContainerId = findTool(allTool);
+        robotSystem.addTask(toolContainerId, allTool, conveyorSystem);
+    }
+
+    private int findTool(AllTool allTool)
+    {
+        Random random = new Random();
+        return random.nextInt(100);
     }
 }

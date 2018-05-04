@@ -1,24 +1,30 @@
 package sa.tws1.service.wms;
 
-public class Robot implements Runnable
+import java.util.Random;
+
+public class Robot implements Action
 {
     private String name;
-    private Action action;
-    private ConveyerBelt conveyerBelt;
 
-    public Robot(String name, Action action, ConveyerBelt conveyerBelt)
+    public Robot(String name)
     {
         this.name = name;
-        this.action = action;
-        this.conveyerBelt = conveyerBelt;
     }
 
     @Override
-    public void run()
+    public void move()
     {
-        System.out.println(name + " start");
-        action.move();
-        System.out.println(name + " end");
-        conveyerBelt.move();
+        Random random = new Random();
+        System.out.println(name + " get tool");
+        System.out.println(name + " is moving...");
+        try
+        {
+            Thread.sleep(random.nextInt(100));
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+        System.out.println(name + " put tool");
     }
 }
