@@ -130,7 +130,7 @@ public class ToolService
     {
         start = start < 0 ? 0 : start;
         Employee employee = employeeService.getEmployee();
-        Sort sort = new Sort(Sort.Direction.ASC, "date");
+        Sort sort = new Sort(Sort.Direction.DESC, "date");
         Pageable pageable = PageRequest.of(start, size, sort);
         Page<Tool> page = toolDAO.findAllByEmployee(employee, pageable);
         return page;
