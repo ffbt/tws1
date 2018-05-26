@@ -9,14 +9,16 @@ public class ToolMessage
     private String name;
     private String date;
     private Integer num;
+    private Double price;
 
-    public ToolMessage(Integer id, String name, Date date, Integer num)
+    public ToolMessage(Integer id, String name, Date date, Integer num, Double price)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.id = id;
         this.name = name;
         this.date = sdf.format(date);
         this.num = num;
+        this.price = price;
     }
 
     public Integer getId()
@@ -57,5 +59,15 @@ public class ToolMessage
     public void setNum(Integer num)
     {
         this.num = num;
+    }
+
+    public Double getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(Double price)
+    {
+        this.price = price;
     }
 }

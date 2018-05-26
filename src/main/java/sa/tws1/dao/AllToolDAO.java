@@ -23,4 +23,6 @@ public interface AllToolDAO extends JpaRepository<AllTool, Integer>
     List<AllTool> findByName(String name);
 
     Page<AllTool> findAllByCompany(Company company, Pageable pageable);
+
+    AllTool findByNameAndCompanyAndDepartmentAndPrice(String name, Company company, String department, double price);
 }

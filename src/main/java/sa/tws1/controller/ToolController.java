@@ -48,6 +48,16 @@ public class ToolController
         return "addTools";
     }
 
+    @RequestMapping("/addTool")
+    public String addTool(Model model, AllTool allTool)
+    {
+        if (!toolService.addTool(allTool))
+            model.addAttribute("state", 1);
+        else
+            model.addAttribute("state", 0);
+        return "addTools";
+    }
+
     @RequestMapping("/registerInexpensiveTool")
     public String registerInexpensiveTool(int id)
     {

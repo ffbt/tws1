@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sa.tws1.bean.AllTool;
 import sa.tws1.bean.Employee;
+import sa.tws1.bean.Role;
 import sa.tws1.dao.AllToolDAO;
 import sa.tws1.service.etms.EmployeeService;
 import sa.tws1.service.etms.ToolService;
@@ -44,11 +45,16 @@ public class WMSService
         if (list.isEmpty())
             return 1;   // 没有
         AllTool allTool = list.get(0);
-        if (employee.getUserName().equals(CommonUtil.roles[CommonUtil.specialistId]))
+//        if (employee.getUserName().equals(CommonUtil.roles[CommonUtil.specialistId]))
+//        if (employee.getRoles().contains(CommonUtil.roles[CommonUtil.specialistId]))
+        for (Role role : employee.getRoles())
         {
-            toolService.registerTool(employee, allTool);
-            toolWarehouse.getTool(allTool);
-            return 0;   // ok
+            if (role.getRoleName().equals(CommonUtil.roles[CommonUtil.specialistId]))
+            {
+                toolService.registerTool(employee, allTool);
+                toolWarehouse.getTool(allTool);
+                return 0;   // ok}
+            }
         }
         for (AllTool allTool1 : list)
         {

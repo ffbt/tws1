@@ -19,8 +19,8 @@
         </div>
         <div id = "navbar" class = "collapse navbar-collapse">
             <ul class = "nav navbar-nav">
-                <li><a th:href = "@{/}">首页</a></li>
-                <li><a th:href = "@{/set}">设置</a></li>
+                <!--<li><a th:href = "@{/}">首页</a></li>-->
+                <li><a th:href = "@{/set}">个人信息管理</a></li>
             </ul>
             <span class = "pull-right">
             <form th:action = "@{/logout}" method = "post" style = "padding-top: 10px">
@@ -46,7 +46,8 @@
             <td th:text = "${toolMessage.name}"></td>
             <td th:text = "${toolMessage.date}"></td>
             <td th:text = "${toolMessage.num}"></td>
-            <td><a th:href = "@{/cancellation(id=${toolMessage.id})}">注销</a></td>
+            <td th:if = "${toolMessage.price <= 200}"><a th:href = "@{/cancellation(id=${toolMessage.id})}">注销</a></td>
+            <td th:if = "${toolMessage.price > 200}">注销</td>
         </tr>
         </tbody>
     </table>

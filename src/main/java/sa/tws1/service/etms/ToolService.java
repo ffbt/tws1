@@ -6,13 +6,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import sa.tws1.bean.*;
+import sa.tws1.bean.AllTool;
+import sa.tws1.bean.Company;
+import sa.tws1.bean.Employee;
+import sa.tws1.bean.Role;
+import sa.tws1.bean.Tool;
+import sa.tws1.bean.ToolMessage;
 import sa.tws1.dao.AllToolDAO;
 import sa.tws1.dao.CompanyDAO;
 import sa.tws1.dao.EmployeeDAO;
 import sa.tws1.dao.ToolDAO;
 import sa.tws1.util.CommonUtil;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -67,8 +73,37 @@ public class ToolService
         return allToolDAO.findAllByCompany(employee.getCompany(), pageable);
     }
 
+    public boolean addTool(AllTool allTool)
+    {
+        Employee employee = employeeService.getEmployee();
+        try
+        {
+            allTool.setCompany(employee.getCompany());
+            allTool.setPrice(BigDecimal.valueOf(allTool.getPrice()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue());
+            allTool.setDepartment(employee.getDepartment());
+            AllTool tmp = allToolDAO.findByNameAndCompanyAndDepartmentAndPrice(allTool.getName(), allTool.getCompany(), allTool.getDepartment(), allTool.getPrice());
+            if (tmp != null)
+            {
+                tmp.setNum(tmp.getNum() + allTool.getNum());
+                allToolDAO.save(tmp);
+            }
+            else
+            {
+                Set<AllTool> set = allTool.getCompany().getAllTools();
+                set.add(allTool);
+                allToolDAO.saveAll(set);
+            }
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+        return true;
+    }
+
     public void oneKeyAddition()
     {
+//        System.out.println("add");
         Random random = new Random();
         int n = 1000;
         Map<Integer, Company> map = new HashMap<>();
@@ -82,6 +117,7 @@ public class ToolService
             int departmentId = 1 + random.nextInt(4);
             int num = 50 + random.nextInt(50);
             double price = random.nextDouble() * 400;
+            price = BigDecimal.valueOf(price).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
             if ((company = map.get(companyId)) == null)
             {
                 company = companyDAO.findById(companyId).get();
@@ -142,7 +178,7 @@ public class ToolService
         for (Tool tool : page)
         {
             AllTool allTool = allToolDAO.findById(tool.getTid()).get();
-            ToolMessage toolMessage = new ToolMessage(tool.getId(), allTool.getName(), tool.getDate(), tool.getNum());
+            ToolMessage toolMessage = new ToolMessage(tool.getId(), allTool.getName(), tool.getDate(), tool.getNum(), allTool.getPrice());
             list.add(toolMessage);
         }
         return list;
