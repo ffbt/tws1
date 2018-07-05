@@ -1,4 +1,4 @@
-package sa.tws1.security.service;
+package sa.tws1.service.etms;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import sa.tws1.bean.Employee;
 import sa.tws1.bean.Role;
 import sa.tws1.dao.EmployeeDAO;
-import sa.tws1.security.bean.SecurityUser;
+import sa.tws1.bean.SecurityUser;
 
 import java.util.ArrayList;
 import java.util.List;

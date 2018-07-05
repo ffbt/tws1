@@ -1,4 +1,4 @@
-package sa.tws1.security.bean;
+package sa.tws1.bean;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

@@ -1,4 +1,4 @@
-package sa.tws1.security.controller;
+package sa.tws1.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

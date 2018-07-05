@@ -10,6 +10,7 @@ public class AllTool implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private Integer num;
     private Double price;

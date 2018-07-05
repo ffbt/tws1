@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import sa.tws1.security.service.CustomUserService;
+import sa.tws1.service.etms.CustomUserService;
 import sa.tws1.util.MD5Util;
 
 @Configuration
@@ -44,11 +44,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.authorizeRequests()
 //                .antMatchers("/js/**","/css/**").permitAll()
-                .antMatchers("/register","/login").permitAll()
+                .antMatchers("/register", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .usernameParameter("id")
+                .passwordParameter("password")
                 .loginPage("/login")
                 .defaultSuccessUrl("/home")
                 .failureUrl("/login?error").permitAll()
