@@ -43,7 +43,7 @@
         <th sec:authorize = "hasRole('ROLE_EMPLOYEE')">操作</th>
         </thead>
         <tbody>
-        <tr th:each = "tool: ${page}">
+        <tr th:each = "tool: ${page}" th:if="${tool.price lt 50}">
             <td th:text = "${tool.id}"></td>
             <td th:text = "${tool.name}"></td>
             <td th:text = "'$' + ${tool.price}"></td>
